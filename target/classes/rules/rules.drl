@@ -12,6 +12,21 @@ import java.io.InputStreamReader
 import com.drools.best_game.BestGame
 
 
+function void askQuestion(Question q){
+    JFrame frame = new JFrame();
+    int answer_idx = JOptionPane.showOptionDialog(frame,
+            q.getQ(),
+            "Answer the question",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            q.getPossibleAnswers(),
+            q.getPossibleAnswers()[0]
+    );
+    q.setAnswer(q.getPossibleAnswers()[answer_idx]);
+}
+
+
 
 rule "init"
 when
@@ -32,11 +47,11 @@ end
 
 rule "first question"
 when
-    // check if already passed main
-    MainFrame(started == true)
+    // check if already passed main frame
+//    MainFrame(started == true)
     $q: Question(getShortcut() == "nerd", getAnswer() == null)
 then
     System.out.println("here");
-    $q.ask();
+    askQuestion($q);
     System.out.println($q.getAnswer());
 end

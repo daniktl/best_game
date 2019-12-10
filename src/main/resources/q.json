@@ -7,5 +7,14 @@
       "No"
     ],
     "answer": null
+  },
+  {
+    "q": "Are you a huge nerd?",
+    "shortcut": "nerd",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ],
+    "answer": null
   }
 ]
