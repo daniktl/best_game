@@ -1,0 +1,42 @@
+package com.drools.best_game
+import com.drools.best_game.BestGame.Question
+import com.drools.best_game.BestGame.MainFrame
+import javax.swing.JFrame
+import javax.swing.JOptionPane
+import java.awt.Rectangle
+import com.google.gson.Gson
+import java.io.InputStream
+import com.google.gson.stream.JsonReader
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import com.drools.best_game.BestGame
+
+
+
+rule "init"
+when
+
+then
+    Gson gson = new Gson();
+    InputStream is = BestGame.class.getResourceAsStream("/q.json");
+    JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(is)));
+
+    Question[] questions = gson.fromJson(reader, Question[].class);
+
+    for (Question q: questions) {
+        insert(q);
+    }
+    MainFrame main_frame = new MainFrame();
+    insert(main_frame);
+end
+
+rule "first question"
+when
+    // check if already passed main
+    MainFrame(started == true)
+    $q: Question(getShortcut() == "nerd", getAnswer() == null)
+then
+    System.out.println("here");
+    $q.ask();
+    System.out.println($q.getAnswer());
+end
