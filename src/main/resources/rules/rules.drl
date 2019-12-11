@@ -41,17 +41,27 @@ then
     for (Question q: questions) {
         insert(q);
     }
-    MainFrame main_frame = new MainFrame();
-    insert(main_frame);
+//    MainFrame main_frame = new MainFrame();
+//    insert(main_frame);
 end
 
-rule "first question"
+rule "less then two hours"
 when
     // check if already passed main frame
-    MainFrame(started == true)
-    $q: Question(getShortcut() == "nerd", getAnswer() == null)
+    // MainFrame(started == true)
+    Question(getShortcut() == "2 hours", getAnswer() == "No")
+    $q : Question(getShortcut() == "nerd", getAnswer() == null)
 then
-    System.out.println("here");
+    Question q_tmp = $q;
+    q_tmp.ask();
+    delete($q);
+    insert(q_tmp);
+end
+
+rule "nerd"
+when
+    Question(getShortcut() == "nerd", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "hours preparing", getAnswer() == null)
+then
     askQuestion($q);
-    System.out.println($q.getAnswer());
 end

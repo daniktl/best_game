@@ -1,11 +1,300 @@
 [
   {
+    "q": "Are you playing with children?",
+    "shortcut": "children",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ],
+    "choosedAnswer": "No"
+  },
+  {
+    "q": "Play more than two hours?",
+    "shortcut": "2 hours",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ],
+    "choosedAnswer": "No"
+  },
+  {
     "q": "Are you a huge nerd?",
     "shortcut": "nerd",
     "possibleAnswers": [
       "Yes",
       "No"
-    ],
-    "answer": null
+    ]
+  },
+  {
+    "q": "Do you want to spend dozens of hours preparing to play?",
+    "shortcut": "spend hours preparing",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you really like spending money?",
+    "shortcut": "like spending money",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Does the name Boomer give you wet dreams?",
+    "shortcut": "like boomer",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you think everyone should just get along?",
+    "shortcut": "everyone get along",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you secretly wish you were a dick? (a P.I.)",
+    "shortcut": "wish you were a dick",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you have a Monty Python Fetish?",
+    "shortcut": "monthy python",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Zombies?",
+    "shortcut": "zombies",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Would you rather fight monsters or viruses?",
+    "shortcut": "monsters vs viruses",
+    "possibleAnswers": [
+      "Monster",
+      "Virus"
+    ]
+  },
+  {
+    "q": "Do you like to gamble?",
+    "shortcut": "gamble",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Are you over 50 years old?",
+    "shortcut": "over 50",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "More then two of you?",
+    "shortcut": "more then 2",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Are you in Mensa?",
+    "shortcut": "mensa",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Chess to cliche?",
+    "shortcut": "cliche",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Party game?",
+    "shortcut": "party",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Looking to get laid?",
+    "shortcut": "get laid",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Want to embarrass your friends?",
+    "shortcut": "embarrass",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you want to be a thug or an artist?",
+    "shortcut": "thug vs artist",
+    "possibleAnswers": [
+      "Thug",
+      "Artist"
+    ]
+  },
+  {
+    "q": "Are you a creative liar?",
+    "shortcut": "creative",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Words or trivia?",
+    "shortcut": "words vs trivia",
+    "possibleAnswers": [
+      "Words",
+      "Trivia"
+    ]
+  },
+  {
+    "q": "Good with you hands?",
+    "shortcut": "good hands",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Are you know it all?",
+    "shortcut": "know all",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Get straight A's?",
+    "shortcut": "a's",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you have train fetish?",
+    "shortcut": "trains",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you enjoy economics?",
+    "shortcut": "economics",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Simple rules?",
+    "shortcut": "simple",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Words or tiles?",
+    "shortcut": "words vs tiles",
+    "possibleAnswers": [
+      "Words",
+      "Tiles"
+    ]
+  },
+  {
+    "q": "Constant hard choices?",
+    "shortcut": "hard choices",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Farming fetish?",
+    "shortcut": "farming",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Do you mind having to buy two games?",
+    "shortcut": "two games",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Are all players serious board game geeks?",
+    "shortcut": "game geeks",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Card/deck based game?",
+    "shortcut": "card/deck",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Complexity?",
+    "shortcut": "complexity",
+    "possibleAnswers": [
+      "Less",
+      "More"
+    ]
+  },
+  {
+    "q": "Do you like to plan your strategy before your turn?",
+    "shortcut": "strategy",
+    "possibleAnswers": [
+      "Yes",
+      "No"
+    ]
+  },
+  {
+    "q": "Defined turns or no down-time?",
+    "shortcut": "defined vs nodt",
+    "possibleAnswers": [
+      "Defined",
+      "No down-time"
+    ]
   }
 ]
