@@ -64,6 +64,10 @@ public class BestGame {
             return this.choosedAnswer;
         }
 
+        public boolean compareAnswer(String str){
+            return this.choosedAnswer.equals(str);
+        }
+
         public void setAnswer(String answer) {
             this.choosedAnswer = answer;
         }
