@@ -1,6 +1,8 @@
 package com.drools.best_game
 import com.drools.best_game.BestGame.Question
-import com.drools.best_game.BestGame.MainFrame
+//import com.drools.best_game.BestGame.PossibleAnswers
+import function com.drools.best_game.BestGame.askQuestion
+
 import javax.swing.JFrame
 import javax.swing.JOptionPane
 import java.awt.Rectangle
@@ -10,22 +12,35 @@ import com.google.gson.stream.JsonReader
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import com.drools.best_game.BestGame
+import java.util.ArrayList
 
 
-function void askQuestion(Question q){
-    JFrame frame = new JFrame();
-    int answer_idx = JOptionPane.showOptionDialog(frame,
-            q.getQ(),
-            "Answer the question",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            q.getPossibleAnswers(),
-            q.getPossibleAnswers()[0]
-    );
-    q.setAnswer(q.getPossibleAnswers()[answer_idx]);
-}
+//declare Question
+//    q: String
+//    shortcut: String
+//    possibleAnswers: String[]
+//    choosedAnswer: String
+//end;
 
+declare Answer
+    shortcut: String
+    a: String
+end;
+
+
+//function String askQuestion(Question q){
+//    JFrame frame = new JFrame();
+//    int answer_idx = JOptionPane.showOptionDialog(frame,
+//            q.getQ(),
+//            "Answer the question",
+//            JOptionPane.DEFAULT_OPTION,
+//            JOptionPane.QUESTION_MESSAGE,
+//            null,
+//            q.getPossibleAnswers(),
+//            q.getPossibleAnswers()[0]
+//    );
+//    return q.getPossibleAnswers()[answer_idx];
+//}
 
 
 rule "init"
@@ -52,14 +67,20 @@ when
     Question(getShortcut() == "2 hours", getAnswer() == "No")
     $q : Question(getShortcut() == "nerd", getAnswer() == null)
 then
-    $q.ask();
-    update($q);
+    askQuestion($q);
+//    new_answer = new Answer($q.que, ans);
+//    insert(new_answer);
+//    $q.setChoosedAnswer(answer);
+
 end
 
 rule "nerd"
 when
-    Question(getShortcut() == "nerd", getAnswer() == 'Yes')
+    Question(getShortcut() == "nerd", getAnswer() != null)
     $q: Question(getShortcut() == "hours preparing", getAnswer() == null)
+
 then
     askQuestion($q);
+//    $q.setChoosedAnswer(answer);
+//    update($q);
 end
