@@ -2,6 +2,7 @@ package com.drools.best_game;
 
 import org.apache.log4j.BasicConfigurator;
 import org.drools.compiler.compiler.DroolsParserException;
+import org.kie.api.KieBase;
 import org.kie.api.KieServices;
 import org.kie.api.event.rule.DebugAgendaEventListener;
 import org.kie.api.event.rule.DebugRuleRuntimeEventListener;
@@ -16,13 +17,15 @@ public class BestGame {
 
     private static KieSession session;
     private static KieContainer container;
+    private static KieBase k_base;
 
     public static void main(String[] args) throws DroolsParserException,
             IOException {
         KieServices ks = KieServices.Factory.get();
-        BasicConfigurator.configure();
+//        BasicConfigurator.configure();
         container = ks.getKieClasspathContainer();
-        session = container.newKieSession("ksession-rules");
+        k_base = container.getKieBase();
+        session = k_base.newKieSession();
         MainFrame.start(session);
         session.addEventListener( new DebugRuleRuntimeEventListener());
         session.addEventListener( new DebugAgendaEventListener());
@@ -32,7 +35,8 @@ public class BestGame {
     public static void askQuestion(Question q){
         System.out.println(q.getQ());
         JFrame frame = new JFrame();
-        int answer_idx = JOptionPane.showOptionDialog(frame,
+        int answer_idx = JOptionPane.showOptionDialog(
+                frame,
                 q.getQ(),
                 "Answer the question",
                 JOptionPane.DEFAULT_OPTION,
@@ -41,8 +45,8 @@ public class BestGame {
                 q.getPossibleAnswers(),
                 q.getPossibleAnswers()[0]
         );
-        q.setAnswer(q.getPossibleAnswers()[answer_idx]);
         FactHandle fh = session.getFactHandle(q);
+        q.setAnswer(q.getPossibleAnswers()[answer_idx]);
         session.update(fh, q);
         session.fireAllRules();
     }
