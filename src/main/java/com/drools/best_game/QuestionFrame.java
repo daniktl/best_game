@@ -14,13 +14,11 @@ import java.lang.reflect.Method;
 public class QuestionFrame extends MainGUI {
 
     private String q;
-    private String[] possibleAnswers;
     private String answer;
     private String choosedAnswer;
 
     public QuestionFrame(String q, String[] possibleAnswers){
         this.q = q;
-        this.possibleAnswers = possibleAnswers;
         this.answer = "";
 
         clear_content();
@@ -30,13 +28,11 @@ public class QuestionFrame extends MainGUI {
         GroupLayout.ParallelGroup horizontal = groupLayout.createParallelGroup();
         GroupLayout.SequentialGroup vertical = groupLayout.createSequentialGroup();
 
-
-
         groupLayout.setHorizontalGroup(horizontal);
         groupLayout.setVerticalGroup(vertical);
 
         JPanel title_panel = new JPanel();
-        JLabel title = new JLabel(q);
+        JLabel title = new JLabel("<html><div style=\"width: 450px; word-wrap: break-word\">" +q+ "</div></html>");
         title.setFont(new Font(title.getFont().getName(), Font.PLAIN, 24));
         title.setBorder(new EmptyBorder(10, 10, 0, 0));
 
@@ -69,38 +65,6 @@ public class QuestionFrame extends MainGUI {
         }
         horizontal.addComponent(buttonsPanel);
         vertical.addComponent(buttonsPanel);
-
-//        System.out.println("here");
-
-//        JPanel description_panel = new JPanel();
-//        JLabel description = new JLabel("Answer for a couple of question to find the best matching.");
-//        description.setFont(new Font(description.getFont().getName(), Font.PLAIN, 14));
-//        description_panel.add(description);
-//        horizontal.addComponent(description_panel);
-//        vertical.addComponent(description_panel);
-
-//
-//        JPanel btn_panel = new JPanel();
-////        btn_panel.setSize(600, 50);
-//
-//        nextButton.setActionCommand("next");
-//        nextButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent actionEvent) {
-//                if (actionEvent.getActionCommand().equals("next")) {
-//                    answer = choosedAnswer;
-//
-//                }
-//            }
-//        });
-//
-//
-////        nextButton.setLayout(null);
-////        nextButton.setBounds(200, 200, 100, 50);
-//        btn_panel.add(nextButton);
-//
-//        horizontal.addComponent(btn_panel);
-//        vertical.addComponent(btn_panel);
     }
 
     public void updateAnswer() throws InvocationTargetException, IllegalAccessException {
@@ -128,6 +92,7 @@ public class QuestionFrame extends MainGUI {
                     method.invoke(target, choosedAnswer);
                     FactHandle fh = getSession().getFactHandle(target);
                     getSession().update(fh, target);
+                    getSession().fireAllRules();
                     break;
                 }
             }
