@@ -67,6 +67,7 @@ then
 end
 
 rule "less then two hours"
+no-loop
 when
     // check if already passed main frame
     // MainFrame(started == true)
@@ -79,6 +80,7 @@ then
 end
 
 rule "nerd"
+no-loop
 when
     Question(getShortcut() == "nerd", getAnswer() == "Yes")
     $q: Question(getShortcut() == "spend hours preparing", getAnswer() == null)
@@ -88,6 +90,7 @@ then
 end
 
 rule "spend hours preparing"
+no-loop
 when
     $q: Question(getShortcut() == "spend hours preparing", getAnswer() == "Yes")
 then

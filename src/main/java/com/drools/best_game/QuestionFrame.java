@@ -55,8 +55,13 @@ public class QuestionFrame extends MainGUI {
                 @Override
                 public void actionPerformed(ActionEvent actionEvent) {
                     choosedAnswer = possAn;
-                    nextButton.setEnabled(true);
-
+                    try {
+                        updateAnswer();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             options.add(option);
@@ -74,34 +79,28 @@ public class QuestionFrame extends MainGUI {
 //        horizontal.addComponent(description_panel);
 //        vertical.addComponent(description_panel);
 
-
-        JPanel btn_panel = new JPanel();
-//        btn_panel.setSize(600, 50);
-
-        nextButton.setActionCommand("next");
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (actionEvent.getActionCommand().equals("next")) {
-                    answer = choosedAnswer;
-                    try {
-                        updateAnswer();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-
-//        nextButton.setLayout(null);
-//        nextButton.setBounds(200, 200, 100, 50);
-        btn_panel.add(nextButton);
-
-        horizontal.addComponent(btn_panel);
-        vertical.addComponent(btn_panel);
+//
+//        JPanel btn_panel = new JPanel();
+////        btn_panel.setSize(600, 50);
+//
+//        nextButton.setActionCommand("next");
+//        nextButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent actionEvent) {
+//                if (actionEvent.getActionCommand().equals("next")) {
+//                    answer = choosedAnswer;
+//
+//                }
+//            }
+//        });
+//
+//
+////        nextButton.setLayout(null);
+////        nextButton.setBounds(200, 200, 100, 50);
+//        btn_panel.add(nextButton);
+//
+//        horizontal.addComponent(btn_panel);
+//        vertical.addComponent(btn_panel);
     }
 
     public void updateAnswer() throws InvocationTargetException, IllegalAccessException {
@@ -110,7 +109,7 @@ public class QuestionFrame extends MainGUI {
         for (FactHandle f: getSession().getFactHandles()){
             Object sessionObject = getSession().getObject(f);
             for (Method method: sessionObject.getClass().getDeclaredMethods()){
-                if (method.getName().startsWith("getShortcut")) {
+                if (method.getName().startsWith("getQ")) {
                     Object value = method.invoke(sessionObject);
                     if (value != null) {
                         if (value.equals(this.q)){
@@ -126,7 +125,7 @@ public class QuestionFrame extends MainGUI {
         if (target != null){
             for (Method method: target.getClass().getDeclaredMethods()){
                 if (method.getName().startsWith("setAnswer")) {
-                    method.invoke(target, answer);
+                    method.invoke(target, choosedAnswer);
                     FactHandle fh = getSession().getFactHandle(target);
                     getSession().update(fh, target);
                     break;
