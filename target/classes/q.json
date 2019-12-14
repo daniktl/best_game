@@ -6,7 +6,7 @@
       "Yes",
       "No"
     ],
-    "choosedAnswer": "No"
+    "answer": "No"
   },
   {
     "q": "Play more than two hours?",
@@ -15,7 +15,7 @@
       "Yes",
       "No"
     ],
-    "choosedAnswer": "No"
+    "answer": "No"
   },
   {
     "q": "Are you a huge nerd?",

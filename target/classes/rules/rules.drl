@@ -1,7 +1,9 @@
 package com.drools.best_game
-import com.drools.best_game.BestGame.Question
-//import com.drools.best_game.BestGame.PossibleAnswers
-import function com.drools.best_game.BestGame.askQuestion
+//import com.drools.best_game.BestGame.Question
+import com.drools.best_game.MainGUI
+import com.drools.best_game.ResultFrame
+import com.drools.best_game.QuestionFrame
+//import function com.drools.best_game.BestGame.askQuestion
 
 import javax.swing.JFrame
 import javax.swing.JOptionPane
@@ -15,21 +17,27 @@ import com.drools.best_game.BestGame
 import java.util.ArrayList
 
 
-//declare Question
-//    q: String
-//    shortcut: String
-//    possibleAnswers: String[]
-//    choosedAnswer: String
-//end;
-
-declare Answer
+declare Question
+    q: String
     shortcut: String
-    a: String
+    possibleAnswers: String[]
+    answer: String
 end;
 
 
-//function String askQuestion(Question q){
-//    JFrame frame = new JFrame();
+function void showResult(String result){
+    ResultFrame rf = new ResultFrame(result);
+    rf.show();
+}
+
+function void askQuestion(Question q){
+    QuestionFrame qf = new QuestionFrame(q.getQ(), q.getPossibleAnswers());
+    qf.show();
+}
+
+
+//function void askQuestion(Question q){
+//    JFrame frame = MainGUI.getFrame();
 //    int answer_idx = JOptionPane.showOptionDialog(frame,
 //            q.getQ(),
 //            "Answer the question",
@@ -39,7 +47,7 @@ end;
 //            q.getPossibleAnswers(),
 //            q.getPossibleAnswers()[0]
 //    );
-//    return q.getPossibleAnswers()[answer_idx];
+//    q.setAnswer(q.getPossibleAnswers()[answer_idx]);
 //}
 
 
@@ -56,8 +64,6 @@ then
     for (Question q: questions) {
         insert(q);
     }
-//    MainFrame main_frame = new MainFrame();
-//    insert(main_frame);
 end
 
 rule "less then two hours"
@@ -68,19 +74,23 @@ when
     $q : Question(getShortcut() == "nerd", getAnswer() == null)
 then
     askQuestion($q);
-//    new_answer = new Answer($q.que, ans);
-//    insert(new_answer);
-//    $q.setChoosedAnswer(answer);
+    update($q);
 
 end
 
 rule "nerd"
 when
-    Question(getShortcut() == "nerd", getAnswer() != null)
-    $q: Question(getShortcut() == "hours preparing", getAnswer() == null)
-
+    Question(getShortcut() == "nerd", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "spend hours preparing", getAnswer() == null)
 then
     askQuestion($q);
-//    $q.setChoosedAnswer(answer);
-//    update($q);
+    update($q);
 end
+
+rule "spend hours preparing"
+when
+    $q: Question(getShortcut() == "spend hours preparing", getAnswer() == "Yes")
+then
+    showResult("Warcaby");
+end
+

@@ -1,6 +1,4 @@
 package com.drools.best_game;
-
-import org.apache.log4j.BasicConfigurator;
 import org.drools.compiler.compiler.DroolsParserException;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
@@ -16,24 +14,20 @@ import java.io.IOException;
 public class BestGame {
 
     private static KieSession session;
-    private static KieContainer container;
-    private static KieBase k_base;
 
     public static void main(String[] args) throws DroolsParserException,
             IOException {
         KieServices ks = KieServices.Factory.get();
-//        BasicConfigurator.configure();
-        container = ks.getKieClasspathContainer();
-        k_base = container.getKieBase();
+        KieContainer container = ks.getKieClasspathContainer();
+        KieBase k_base = container.getKieBase();
         session = k_base.newKieSession();
-        MainFrame.start(session);
+        MainGUI.start(session);
         session.addEventListener( new DebugRuleRuntimeEventListener());
         session.addEventListener( new DebugAgendaEventListener());
 
     }
 
     public static void askQuestion(Question q){
-        System.out.println(q.getQ());
         JFrame frame = new JFrame();
         int answer_idx = JOptionPane.showOptionDialog(
                 frame,
@@ -47,8 +41,6 @@ public class BestGame {
         );
         FactHandle fh = session.getFactHandle(q);
         q.setAnswer(q.getPossibleAnswers()[answer_idx]);
-        session.update(fh, q);
-        session.fireAllRules();
     }
 
     public static class Question {
@@ -85,21 +77,39 @@ public class BestGame {
         }
     }
 
-//    public static class Answer {
-//        private String question;
+    public static class Answer {
+        private String question;
+        private String answer;
+
+        public Answer(String question, String answer){
+            this.question = question;
+            this.answer = answer;
+        }
+
+        public String getAnswer(){
+            return this.answer;
+        }
+
+        public String getQuestion(){
+            return this.question;
+        }
+    }
+
+//    public static class TmpAnswer {
+//        private String shortcut;
 //        private String answer;
 //
-//        public Answer(String question, String answer){
-//            this.question = question;
-//            this.answer = answer;
+//        public TmpAnswer(String shortcut, String answer){
+//            shortcut = shortcut;
+//            answer = answer;
 //        }
 //
-//        public String getAnswer(){
-//            return this.answer;
+//        public String getShortcut() {
+//            return shortcut;
 //        }
 //
-//        public String getQuestion(){
-//            return this.question;
+//        public String getAnswer() {
+//            return answer;
 //        }
 //    }
 
