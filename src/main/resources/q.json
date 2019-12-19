@@ -106,8 +106,8 @@
     ]
   },
   {
-    "q": "More then two of you?",
-    "shortcut": "more then 2",
+    "q": "More than two of you?",
+    "shortcut": "more than 2",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -122,7 +122,7 @@
     ]
   },
   {
-    "q": "Chess to cliche?",
+    "q": "Chess to cliché?",
     "shortcut": "cliche",
     "possibleAnswers": [
       "Yes",
@@ -186,7 +186,7 @@
     ]
   },
   {
-    "q": "Are you know it all?",
+    "q": "Are you a know it all?",
     "shortcut": "know all",
     "possibleAnswers": [
       "Yes",

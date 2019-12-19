@@ -89,11 +89,594 @@ then
     update($q);
 end
 
+rule "not nerd"
+no-loop
+when
+    Question(getShortcut() == "nerd", getAnswer() == "No")
+    $q: Question(getShortcut() == "everyone get along", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
 rule "spend hours preparing"
 no-loop
 when
     $q: Question(getShortcut() == "spend hours preparing", getAnswer() == "Yes")
 then
-    showResult("Warcaby");
+    showResult("Warhammer");
 end
 
+rule "not spend hours preparing"
+no-loop
+when
+    Question(getShortcut() == "spend hours preparing", getAnswer() == "No")
+    $q: Question(getShortcut() == "like spending money", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "everyone get along"
+no-loop
+when
+    Question(getShortcut() == "everyone get along", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "wish you were a dick", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "not everyone get along"
+no-loop
+when
+    Question(getShortcut() == "everyone get along", getAnswer() == "No")
+    $q: Question(getShortcut() == "gamble", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "like spending money"
+no-loop
+when
+    $q: Question(getShortcut() == "like spending money", getAnswer() == "Yes")
+then
+    showResult("Magic");
+end
+
+rule "not like spending money"
+no-loop
+when
+    Question(getShortcut() == "like spending money", getAnswer() == "No")
+    $q: Question(getShortcut() == "like boomer", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "wish you were a dick"
+no-loop
+when
+    $q: Question(getShortcut() == "wish you were a dick", getAnswer() == "Yes")
+then
+    showResult("Arkham Horror");
+end
+
+rule "not wish you were a dick"
+no-loop
+when
+    Question(getShortcut() == "wish you were a dick", getAnswer() == "No")
+    $q: Question(getShortcut() == "monthy python", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "gamble"
+no-loop
+when
+    $q: Question(getShortcut() == "gamble", getAnswer() == "Yes")
+then
+    showResult("Rummoli");
+end
+
+rule "not gamble"
+no-loop
+when
+    Question(getShortcut() == "gamble", getAnswer() == "No")
+    $q: Question(getShortcut() == "over 50", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "like boomer"
+no-loop
+when
+    $q: Question(getShortcut() == "like boomer", getAnswer() == "Yes")
+then
+    showResult("Battlestar Galactica");
+end
+
+rule "not like boomer"
+no-loop
+when
+    $q: Question(getShortcut() == "like boomer", getAnswer() == "No")
+then
+    showResult("Cosmic Encounter");
+end
+
+rule "monthy python"
+no-loop
+when
+    $q: Question(getShortcut() == "monthy python", getAnswer() == "Yes")
+then
+    showResult("Shadows Over Camelot");
+end
+
+rule "not monthy python"
+no-loop
+when
+    Question(getShortcut() == "monthy python", getAnswer() == "No")
+    $q: Question(getShortcut() == "zombies", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "over 50"
+no-loop
+when
+    Question(getShortcut() == "over 50", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "more than 2", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not over 50"
+no-loop
+when
+    Question(getShortcut() == "over 50", getAnswer() == "No")
+    $q: Question(getShortcut() == "party", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "more than 2"
+no-loop
+when
+    $q: Question(getShortcut() == "more than 2", getAnswer() == "Yes")
+then
+    showResult("Cribbage");
+end
+
+rule "not more than 2"
+no-loop
+when
+    Question(getShortcut() == "more than 2", getAnswer() == "No")
+    $q: Question(getShortcut() == "mensa", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "party"
+no-loop
+when
+    Question(getShortcut() == "party", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "get laid", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not party"
+no-loop
+when
+    Question(getShortcut() == "party", getAnswer() == "No")
+    $q: Question(getShortcut() == "know all", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "mensa"
+no-loop
+when
+    Question(getShortcut() == "mensa", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "cliche", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "not mensa"
+no-loop
+when
+    $q: Question(getShortcut() == "mensa", getAnswer() == "No")
+then
+    showResult("Backgammon");
+end
+
+rule "get laid"
+no-loop
+when
+    $q: Question(getShortcut() == "get laid", getAnswer() == "Yes")
+then
+    showResult("Twister");
+end
+
+rule "not get laid"
+no-loop
+when
+    Question(getShortcut() == "get laid", getAnswer() == "No")
+    $q: Question(getShortcut() == "embarrass", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "know all"
+no-loop
+when
+    $q: Question(getShortcut() == "know all", getAnswer() == "Yes")
+then
+    showResult("Trivial Pursuit");
+end
+
+rule "not know all"
+no-loop
+when
+    Question(getShortcut() == "know all", getAnswer() == "No")
+    $q: Question(getShortcut() == "a's", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "cliche"
+no-loop
+when
+    $q: Question(getShortcut() == "cliche", getAnswer() == "Yes")
+then
+    showResult("Go");
+end
+
+rule "not cliche"
+no-loop
+when
+    $q: Question(getShortcut() == "cliche", getAnswer() == "No")
+then
+    showResult("Chess");
+end
+
+rule "embarrass"
+no-loop
+when
+    Question(getShortcut() == "embarrass", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "thug vs artist", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not embarrass"
+no-loop
+when
+    Question(getShortcut() == "embarrass", getAnswer() == "No")
+    $q: Question(getShortcut() == "creative", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "a's"
+no-loop
+when
+    $q: Question(getShortcut() == "a's", getAnswer() == "Yes")
+then
+    showResult("Scrabble");
+end
+
+rule "not a's"
+no-loop
+when
+    Question(getShortcut() == "a's", getAnswer() == "No")
+    $q: Question(getShortcut() == "trains", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "thug vs artist thug"
+no-loop
+when
+    $q: Question(getShortcut() == "thug vs artist", getAnswer() == "Thug")
+then
+    showResult("Ca$h'N'Gun$");
+end
+
+rule "thug vs artist artist"
+no-loop
+when
+    $q: Question(getShortcut() == "thug vs artist", getAnswer() == "Artist")
+then
+    showResult("Cranium");
+end
+
+rule "creative"
+no-loop
+when
+    Question(getShortcut() == "creative", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "words vs trivia", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not creative"
+no-loop
+when
+    Question(getShortcut() == "creative", getAnswer() == "No")
+    $q: Question(getShortcut() == "good hands", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "trains"
+no-loop
+when
+    Question(getShortcut() == "trains", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "economics", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not trains"
+no-loop
+when
+    Question(getShortcut() == "trains", getAnswer() == "No")
+    $q: Question(getShortcut() == "simple", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "words vs trivia words"
+no-loop
+when
+    $q: Question(getShortcut() == "words vs trivia", getAnswer() == "Words")
+then
+    showResult("Beyond Balderdash");
+end
+
+rule "words vs trivia trivia"
+no-loop
+when
+    $q: Question(getShortcut() == "words vs trivia", getAnswer() == "Trivia")
+then
+    showResult("Wits and Wagers");
+end
+
+rule "good hands"
+no-loop
+when
+    $q: Question(getShortcut() == "good hands", getAnswer() == "Yes")
+then
+    showResult("Jenga (DK Edition)");
+end
+
+rule "not good hands"
+no-loop
+when
+    $q: Question(getShortcut() == "good hands", getAnswer() == "No")
+then
+    showResult("Taboo");
+end
+
+rule "economics"
+no-loop
+when
+    $q: Question(getShortcut() == "economics", getAnswer() == "Yes")
+then
+    showResult("Steam");
+end
+
+rule "not economics"
+no-loop
+when
+    $q: Question(getShortcut() == "economics", getAnswer() == "No")
+then
+    showResult("Ticket to Ride");
+end
+
+rule "simple"
+no-loop
+when
+    Question(getShortcut() == "simple", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "words vs tiles", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not simple"
+no-loop
+when
+    Question(getShortcut() == "simple", getAnswer() == "No")
+    $q: Question(getShortcut() == "hard choices", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "words vs tiles words"
+no-loop
+when
+    $q: Question(getShortcut() == "words vs tiles", getAnswer() == "Words")
+then
+    showResult("Scattergories");
+end
+
+rule "words vs tiles tiles"
+no-loop
+when
+    $q: Question(getShortcut() == "words vs tiles", getAnswer() == "Tiles")
+then
+    showResult("Qwirkle");
+end
+
+rule "hard choices"
+no-loop
+when
+    Question(getShortcut() == "hard choices", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "farming", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not hard choices"
+no-loop
+when
+    Question(getShortcut() == "hard choices", getAnswer() == "No")
+    $q: Question(getShortcut() == "card/deck", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "farming"
+no-loop
+when
+    $q: Question(getShortcut() == "farming", getAnswer() == "Yes")
+then
+    showResult("Agricola");
+end
+
+rule "not farming"
+no-loop
+when
+    Question(getShortcut() == "farming", getAnswer() == "No")
+    $q: Question(getShortcut() == "two games", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "card/deck"
+no-loop
+when
+    Question(getShortcut() == "card/deck", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "complexity", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+
+rule "not card/deck"
+no-loop
+when
+    Question(getShortcut() == "card/deck", getAnswer() == "No")
+    $q: Question(getShortcut() == "strategy", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "two games"
+no-loop
+when
+    Question(getShortcut() == "two games", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "game geeks", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "not two games"
+no-loop
+when
+    $q: Question(getShortcut() == "two games", getAnswer() == "No")
+then
+    showResult("Cities and Knights");
+end
+
+rule "less complexity"
+no-loop
+when
+    $q: Question(getShortcut() == "complexity", getAnswer() == "Less")
+then
+    showResult("Dominion");
+end
+
+rule "more complexity"
+no-loop
+when
+    $q: Question(getShortcut() == "complexity", getAnswer() == "More")
+then
+    showResult("7 Wonders");
+end
+
+rule "strategy"
+no-loop
+when
+    $q: Question(getShortcut() == "strategy", getAnswer() == "Yes")
+then
+    showResult("Settlers of Catan");
+end
+
+rule "not strategy"
+no-loop
+when
+    Question(getShortcut() == "strategy", getAnswer() == "No")
+    $q: Question(getShortcut() == "defined vs nodt", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
+rule "game geeks"
+no-loop
+when
+    $q: Question(getShortcut() == "game geeks", getAnswer() == "Yes")
+then
+    showResult("Puerto Rico");
+end
+
+rule "not game geeks"
+no-loop
+when
+    $q: Question(getShortcut() == "game geeks", getAnswer() == "No")
+then
+    showResult("Domaine");
+end
+
+rule "defined turns"
+no-loop
+when
+    $q: Question(getShortcut() == "defined vs nodt", getAnswer() == "Defined")
+then
+    showResult("Carcassonne");
+end
+
+rule "no down-time"
+no-loop
+when
+    $q: Question(getShortcut() == "defined vs nodt", getAnswer() == "No down-time")
+then
+    showResult("Pillars of the Earth");
+end
