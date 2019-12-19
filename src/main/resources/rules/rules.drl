@@ -246,6 +246,24 @@ then
     update($q);
 end
 
+rule "zombies"
+no-loop
+when
+    $q: Question(getShortcut() == "zombies", getAnswer() == "Yes")
+then
+    showResult("Last Night on Earth");
+end
+
+rule "not zombies"
+no-loop
+when
+    Question(getShortcut() == "zombies", getAnswer() == "No")
+    $q: Question(getShortcut() == "monsters vs viruses", getAnswer() == null)
+then
+    askQuestion($q);
+    update($q);
+end
+
 rule "more than 2"
 no-loop
 when
@@ -283,6 +301,22 @@ when
 then
     askQuestion($q);
     update($q);
+end
+
+rule "monsters vs viruses monster"
+no-loop
+when
+    $q: Question(getShortcut() == "monsters vs viruses", getAnswer() == "Monster")
+then
+    showResult("Dungeon Run");
+end
+
+rule "monsters vs viruses virus"
+no-loop
+when
+    $q: Question(getShortcut() == "monsters vs viruses", getAnswer() == "Virus")
+then
+    showResult("Pandemic");
 end
 
 rule "mensa"
