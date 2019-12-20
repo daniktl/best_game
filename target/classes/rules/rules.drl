@@ -24,6 +24,43 @@ declare Question
     answer: String
 end;
 
+declare UserPreferences
+    nerd: String
+    spend_hours_preparing: String
+    everyone_get_along: String
+    like_spending_money: String
+    wish_you_were_a_dick: String
+    gamble: String
+    like_boomer: String
+    monthy_python: String
+    over_50: String
+    zombies: String
+    more_than_2: String
+    party: String
+    monsters_vs_viruses: String
+    mensa: String
+    get_laid: String
+    know_all: String
+    cliche: String
+    embarrass: String
+    straight_as: String
+    thug_vs_artist: String
+    creative: String
+    trains: String
+    words_vs_trivia: String
+    good_hands: String
+    economics: String
+    simple: String
+    words_vs_tiles: String
+    hard_choices: String
+    farming: String
+    card_deck: String
+    two_games: String
+    complexity: String
+    strategy: String
+    game_geeks: String
+    defined_vs_nodt: String
+end;
 
 function void showResult(String result){
     ResultFrame rf = new ResultFrame(result);
@@ -31,7 +68,7 @@ function void showResult(String result){
 }
 
 function void askQuestion(Question q){
-    QuestionFrame qf = new QuestionFrame(q.getQ(), q.getPossibleAnswers());
+    QuestionFrame qf = new QuestionFrame(q.getQ(), q.getPossibleAnswers(), q.getShortcut());
     qf.show();
 }
 
@@ -64,45 +101,57 @@ then
     for (Question q: questions) {
         insert(q);
     }
+    insert(new UserPreferences());
 end
 
-rule "less then two hours"
+rule "first question"
 no-loop
 when
-    // check if already passed main frame
-    // MainFrame(started == true)
-    Question(getShortcut() == "2 hours", getAnswer() == "No")
-    $q : Question(getShortcut() == "nerd", getAnswer() == null)
+    $u : UserPreferences(nerd == null)
+    $q : Question(getShortcut() == "nerd")
 then
     askQuestion($q);
-    update($q);
-
+    update($u)
 end
+
+//rule "less then two hours"
+//no-loop
+//when
+//    // check if already passed main frame
+//    // MainFrame(started == true)
+//    Question(getShortcut() == "2 hours", getAnswer() == "No")
+//    $q : Question(getShortcut() == "nerd", getAnswer() == null)
+//then
+//    askQuestion($q);
+//    update($q);
+//end
 
 rule "nerd"
 no-loop
 when
-    Question(getShortcut() == "nerd", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "spend hours preparing", getAnswer() == null)
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == null)
+//    Question(getShortcut() == "nerd", getAnswer() == "Yes")
+    $q: Question(getShortcut() == "spend_hours_preparing")
 then
     askQuestion($q);
-    update($q);
+    update($u)
 end
 
 rule "not nerd"
 no-loop
 when
-    Question(getShortcut() == "nerd", getAnswer() == "No")
-    $q: Question(getShortcut() == "everyone get along", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == null)
+//    Question(getShortcut() == "nerd", getAnswer() == "No")
+    $q: Question(getShortcut() == "everyone_get_along")
 then
     askQuestion($q);
-    update($q);
+    update($u)
 end
 
 rule "spend hours preparing"
 no-loop
 when
-    $q: Question(getShortcut() == "spend hours preparing", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == "Yes")
 then
     showResult("Warhammer");
 end
@@ -110,37 +159,37 @@ end
 rule "not spend hours preparing"
 no-loop
 when
-    Question(getShortcut() == "spend hours preparing", getAnswer() == "No")
-    $q: Question(getShortcut() == "like spending money", getAnswer() == null)
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == "No", like_spending_money == null)
+    $q: Question(getShortcut() == "like_spending_money")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "everyone get along"
 no-loop
 when
-    Question(getShortcut() == "everyone get along", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "wish you were a dick", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == null)
+    $q: Question(getShortcut() == "wish_you_were_a_dick")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "not everyone get along"
 no-loop
 when
-    Question(getShortcut() == "everyone get along", getAnswer() == "No")
-    $q: Question(getShortcut() == "gamble", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == null)
+    $q: Question(getShortcut() == "gamble")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "like spending money"
 no-loop
 when
-    $q: Question(getShortcut() == "like spending money", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == "No", like_spending_money == "Yes")
 then
     showResult("Magic");
 end
@@ -148,17 +197,18 @@ end
 rule "not like spending money"
 no-loop
 when
-    Question(getShortcut() == "like spending money", getAnswer() == "No")
-    $q: Question(getShortcut() == "like boomer", getAnswer() == null)
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == "No", like_spending_money == "No", 
+    	like_boomer == null)
+    $q: Question(getShortcut() == "like_boomer")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "wish you were a dick"
 no-loop
 when
-    $q: Question(getShortcut() == "wish you were a dick", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "Yes")
 then
     showResult("Arkham Horror");
 end
@@ -166,17 +216,18 @@ end
 rule "not wish you were a dick"
 no-loop
 when
-    Question(getShortcut() == "wish you were a dick", getAnswer() == "No")
-    $q: Question(getShortcut() == "monthy python", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == null)
+    $q: Question(getShortcut() == "monthy_python", getAnswer() == null)
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "gamble"
 no-loop
 when
-    $q: Question(getShortcut() == "gamble", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "Yes")
 then
     showResult("Rummoli");
 end
@@ -184,17 +235,18 @@ end
 rule "not gamble"
 no-loop
 when
-    Question(getShortcut() == "gamble", getAnswer() == "No")
-    $q: Question(getShortcut() == "over 50", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == null)
+    $q: Question(getShortcut() == "over_50")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "like boomer"
 no-loop
 when
-    $q: Question(getShortcut() == "like boomer", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == "No", like_spending_money == "No", 
+    	like_boomer == "Yes")
 then
     showResult("Battlestar Galactica");
 end
@@ -202,7 +254,8 @@ end
 rule "not like boomer"
 no-loop
 when
-    $q: Question(getShortcut() == "like boomer", getAnswer() == "No")
+    $u : UserPreferences(nerd == "Yes", spend_hours_preparing == "No", like_spending_money == "No", 
+    	like_boomer == "No")
 then
     showResult("Cosmic Encounter");
 end
@@ -210,7 +263,8 @@ end
 rule "monthy python"
 no-loop
 when
-    $q: Question(getShortcut() == "monthy python", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == "Yes")
 then
     showResult("Shadows Over Camelot");
 end
@@ -218,38 +272,42 @@ end
 rule "not monthy python"
 no-loop
 when
-    Question(getShortcut() == "monthy python", getAnswer() == "No")
-    $q: Question(getShortcut() == "zombies", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == "No", zombies == null)
+    $q: Question(getShortcut() == "zombies")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "over 50"
 no-loop
 when
-    Question(getShortcut() == "over 50", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "more than 2", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == null)
+    $q: Question(getShortcut() == "more_than_2")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not over 50"
 no-loop
 when
-    Question(getShortcut() == "over 50", getAnswer() == "No")
-    $q: Question(getShortcut() == "party", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == null)
+    $q: Question(getShortcut() == "party")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "zombies"
 no-loop
 when
-    $q: Question(getShortcut() == "zombies", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == "No", zombies == "Yes")
 then
     showResult("Last Night on Earth");
 end
@@ -257,17 +315,19 @@ end
 rule "not zombies"
 no-loop
 when
-    Question(getShortcut() == "zombies", getAnswer() == "No")
-    $q: Question(getShortcut() == "monsters vs viruses", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == "No", zombies == "No", monsters_vs_viruses == null)
+    $q: Question(getShortcut() == "monsters_vs_viruses")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "more than 2"
 no-loop
 when
-    $q: Question(getShortcut() == "more than 2", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == "Yes")
 then
     showResult("Cribbage");
 end
@@ -275,38 +335,42 @@ end
 rule "not more than 2"
 no-loop
 when
-    Question(getShortcut() == "more than 2", getAnswer() == "No")
-    $q: Question(getShortcut() == "mensa", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == "No", mensa == null)
+    $q: Question(getShortcut() == "mensa")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "party"
 no-loop
 when
-    Question(getShortcut() == "party", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "get laid", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == null)
+    $q: Question(getShortcut() == "get_laid")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not party"
 no-loop
 when
-    Question(getShortcut() == "party", getAnswer() == "No")
-    $q: Question(getShortcut() == "know all", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == null)
+    $q: Question(getShortcut() == "know_all")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "monsters vs viruses monster"
 no-loop
 when
-    $q: Question(getShortcut() == "monsters vs viruses", getAnswer() == "Monster")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == "No", zombies == "No", monsters_vs_viruses == "Monster")
 then
     showResult("Dungeon Run");
 end
@@ -314,7 +378,8 @@ end
 rule "monsters vs viruses virus"
 no-loop
 when
-    $q: Question(getShortcut() == "monsters vs viruses", getAnswer() == "Virus")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "Yes", wish_you_were_a_dick == "No", 
+    	monthy_python == "No", zombies == "No", monsters_vs_viruses == "Virus")
 then
     showResult("Pandemic");
 end
@@ -322,17 +387,19 @@ end
 rule "mensa"
 no-loop
 when
-    Question(getShortcut() == "mensa", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "cliche", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == "No", mensa == "Yes", cliche == null)
+    $q: Question(getShortcut() == "cliche")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "not mensa"
 no-loop
 when
-    $q: Question(getShortcut() == "mensa", getAnswer() == "No")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == "No", mensa == "No")
 then
     showResult("Backgammon");
 end
@@ -340,7 +407,8 @@ end
 rule "get laid"
 no-loop
 when
-    $q: Question(getShortcut() == "get laid", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "Yes")
 then
     showResult("Twister");
 end
@@ -348,17 +416,19 @@ end
 rule "not get laid"
 no-loop
 when
-    Question(getShortcut() == "get laid", getAnswer() == "No")
-    $q: Question(getShortcut() == "embarrass", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == null)
+    $q: Question(getShortcut() == "embarrass")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "know all"
 no-loop
 when
-    $q: Question(getShortcut() == "know all", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "Yes")
 then
     showResult("Trivial Pursuit");
 end
@@ -366,17 +436,19 @@ end
 rule "not know all"
 no-loop
 when
-    Question(getShortcut() == "know all", getAnswer() == "No")
-    $q: Question(getShortcut() == "a's", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == null)
+    $q: Question(getShortcut() == "straight_as")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "cliche"
 no-loop
 when
-    $q: Question(getShortcut() == "cliche", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == "No", mensa == "Yes", cliche == "Yes")
 then
     showResult("Go");
 end
@@ -384,7 +456,8 @@ end
 rule "not cliche"
 no-loop
 when
-    $q: Question(getShortcut() == "cliche", getAnswer() == "No")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "Yes",
+     more_than_2 == "No", mensa == "Yes", cliche == "No")
 then
     showResult("Chess");
 end
@@ -392,46 +465,51 @@ end
 rule "embarrass"
 no-loop
 when
-    Question(getShortcut() == "embarrass", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "thug vs artist", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "Yes", thug_vs_artist == null)
+    $q: Question(getShortcut() == "thug_vs_artist")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not embarrass"
 no-loop
 when
-    Question(getShortcut() == "embarrass", getAnswer() == "No")
-    $q: Question(getShortcut() == "creative", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == null)
+    $q: Question(getShortcut() == "creative")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
-rule "a's"
+rule "straight A's"
 no-loop
 when
-    $q: Question(getShortcut() == "a's", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "Yes")
 then
     showResult("Scrabble");
 end
 
-rule "not a's"
+rule "not straight A's"
 no-loop
 when
-    Question(getShortcut() == "a's", getAnswer() == "No")
-    $q: Question(getShortcut() == "trains", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == null)
+    $q: Question(getShortcut() == "trains")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "thug vs artist thug"
 no-loop
 when
-    $q: Question(getShortcut() == "thug vs artist", getAnswer() == "Thug")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "Yes", thug_vs_artist == "Thug")
 then
     showResult("Ca$h'N'Gun$");
 end
@@ -439,7 +517,8 @@ end
 rule "thug vs artist artist"
 no-loop
 when
-    $q: Question(getShortcut() == "thug vs artist", getAnswer() == "Artist")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "Yes", thug_vs_artist == "Artist")
 then
     showResult("Cranium");
 end
@@ -447,49 +526,54 @@ end
 rule "creative"
 no-loop
 when
-    Question(getShortcut() == "creative", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "words vs trivia", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", words_vs_trivia == null)
+    $q: Question(getShortcut() == "words_vs_trivia")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not creative"
 no-loop
 when
-    Question(getShortcut() == "creative", getAnswer() == "No")
-    $q: Question(getShortcut() == "good hands", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", good_hands == null)
+    $q: Question(getShortcut() == "good_hands")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "trains"
 no-loop
 when
-    Question(getShortcut() == "trains", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "economics", getAnswer() == null)
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "Yes", economics == null)
+    $q: Question(getShortcut() == "economics")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not trains"
 no-loop
 when
-    Question(getShortcut() == "trains", getAnswer() == "No")
-    $q: Question(getShortcut() == "simple", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == null)
+    $q: Question(getShortcut() == "simple")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "words vs trivia words"
 no-loop
 when
-    $q: Question(getShortcut() == "words vs trivia", getAnswer() == "Words")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", words_vs_trivia == "Words")
 then
     showResult("Beyond Balderdash");
 end
@@ -497,7 +581,8 @@ end
 rule "words vs trivia trivia"
 no-loop
 when
-    $q: Question(getShortcut() == "words vs trivia", getAnswer() == "Trivia")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", words_vs_trivia == "Trivia")
 then
     showResult("Wits and Wagers");
 end
@@ -505,7 +590,8 @@ end
 rule "good hands"
 no-loop
 when
-    $q: Question(getShortcut() == "good hands", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", good_hands == "Yes")
 then
     showResult("Jenga (DK Edition)");
 end
@@ -513,7 +599,8 @@ end
 rule "not good hands"
 no-loop
 when
-    $q: Question(getShortcut() == "good hands", getAnswer() == "No")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", good_hands == "No")
 then
     showResult("Taboo");
 end
@@ -521,7 +608,8 @@ end
 rule "economics"
 no-loop
 when
-    $q: Question(getShortcut() == "economics", getAnswer() == "Yes")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "Yes", economics == "Yes")
 then
     showResult("Steam");
 end
@@ -529,7 +617,8 @@ end
 rule "not economics"
 no-loop
 when
-    $q: Question(getShortcut() == "economics", getAnswer() == "No")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "Yes", economics == "No")
 then
     showResult("Ticket to Ride");
 end
@@ -537,28 +626,34 @@ end
 rule "simple"
 no-loop
 when
-    Question(getShortcut() == "simple", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "words vs tiles", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "Yes", 
+     words_vs_tiles == null)
+    $q: Question(getShortcut() == "words_vs_tiles")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not simple"
 no-loop
 when
-    Question(getShortcut() == "simple", getAnswer() == "No")
-    $q: Question(getShortcut() == "hard choices", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == null)
+    $q: Question(getShortcut() == "hard_choices")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "words vs tiles words"
 no-loop
 when
-    $q: Question(getShortcut() == "words vs tiles", getAnswer() == "Words")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "Yes", 
+     words_vs_tiles == "Words")
 then
     showResult("Scattergories");
 end
@@ -566,7 +661,9 @@ end
 rule "words vs tiles tiles"
 no-loop
 when
-    $q: Question(getShortcut() == "words vs tiles", getAnswer() == "Tiles")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "Yes", 
+     words_vs_tiles == "Tiles")
 then
     showResult("Qwirkle");
 end
@@ -574,28 +671,34 @@ end
 rule "hard choices"
 no-loop
 when
-    Question(getShortcut() == "hard choices", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "farming", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == null)
+    $q: Question(getShortcut() == "farming")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
 rule "not hard choices"
 no-loop
 when
-    Question(getShortcut() == "hard choices", getAnswer() == "No")
-    $q: Question(getShortcut() == "card/deck", getAnswer() == null)
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == null)
+    $q: Question(getShortcut() == "card_deck")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "farming"
 no-loop
-when
-    $q: Question(getShortcut() == "farming", getAnswer() == "Yes")
+when	
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == "Yes")
 then
     showResult("Agricola");
 end
@@ -603,48 +706,58 @@ end
 rule "not farming"
 no-loop
 when
-    Question(getShortcut() == "farming", getAnswer() == "No")
-    $q: Question(getShortcut() == "two games", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == "No", two_games == null)
+    $q: Question(getShortcut() == "two_games")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
-rule "card/deck"
+rule "card_deck"
 no-loop
 when
-    Question(getShortcut() == "card/deck", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "complexity", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "Yes", complexity == null)
+    $q: Question(getShortcut() == "complexity")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 
-rule "not card/deck"
+rule "not card_deck"
 no-loop
 when
-    Question(getShortcut() == "card/deck", getAnswer() == "No")
-    $q: Question(getShortcut() == "strategy", getAnswer() == null)
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "No", strategy == null)
+    $q: Question(getShortcut() == "strategy")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "two games"
 no-loop
 when
-    Question(getShortcut() == "two games", getAnswer() == "Yes")
-    $q: Question(getShortcut() == "game geeks", getAnswer() == null)
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == "No", two_games == "Yes", game_geeks == null)
+    $q: Question(getShortcut() == "game_geeks")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
 rule "not two games"
 no-loop
 when
-    $q: Question(getShortcut() == "two games", getAnswer() == "No")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == "No", two_games == "No")
 then
     showResult("Cities and Knights");
 end
@@ -652,7 +765,9 @@ end
 rule "less complexity"
 no-loop
 when
-    $q: Question(getShortcut() == "complexity", getAnswer() == "Less")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "Yes", complexity == "Less")
 then
     showResult("Dominion");
 end
@@ -660,7 +775,9 @@ end
 rule "more complexity"
 no-loop
 when
-    $q: Question(getShortcut() == "complexity", getAnswer() == "More")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "Yes", complexity == "More")
 then
     showResult("7 Wonders");
 end
@@ -668,7 +785,9 @@ end
 rule "strategy"
 no-loop
 when
-    $q: Question(getShortcut() == "strategy", getAnswer() == "Yes")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "No", strategy == "Yes")
 then
     showResult("Settlers of Catan");
 end
@@ -676,25 +795,31 @@ end
 rule "not strategy"
 no-loop
 when
-    Question(getShortcut() == "strategy", getAnswer() == "No")
-    $q: Question(getShortcut() == "defined vs nodt", getAnswer() == null)
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "No", strategy == "No", defined_vs_nodt == null)
+    $q: Question(getShortcut() == "defined_vs_nodt")
 then
     askQuestion($q);
-    update($q);
+    update($u);
 end
 
-rule "game geeks"
+rule "game_geeks"
 no-loop
 when
-    $q: Question(getShortcut() == "game geeks", getAnswer() == "Yes")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == "No", two_games == "Yes", game_geeks == "Yes")
 then
     showResult("Puerto Rico");
 end
 
-rule "not game geeks"
+rule "not game_geeks"
 no-loop
 when
-    $q: Question(getShortcut() == "game geeks", getAnswer() == "No")
+    $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "Yes", farming == "No", two_games == "Yes", game_geeks == "No")
 then
     showResult("Domaine");
 end
@@ -702,7 +827,9 @@ end
 rule "defined turns"
 no-loop
 when
-    $q: Question(getShortcut() == "defined vs nodt", getAnswer() == "Defined")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "No", strategy == "No", defined_vs_nodt == "Defined")
 then
     showResult("Carcassonne");
 end
@@ -710,7 +837,9 @@ end
 rule "no down-time"
 no-loop
 when
-    $q: Question(getShortcut() == "defined vs nodt", getAnswer() == "No down-time")
+	$u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
+     party == "No", know_all == "No", straight_as == "No", trains == "No", simple == "No", 
+     hard_choices == "No", card_deck == "No", strategy == "No", defined_vs_nodt == "No down-time")
 then
     showResult("Pillars of the Earth");
 end
