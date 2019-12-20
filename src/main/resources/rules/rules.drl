@@ -539,7 +539,7 @@ rule "not creative"
 no-loop
 when
     $u : UserPreferences(nerd == "No", everyone_get_along == "No", gamble == "No", over_50 == "No",
-     party == "Yes", get_laid == "No", embarrass == "No", creative == "Yes", good_hands == null)
+     party == "Yes", get_laid == "No", embarrass == "No", creative == "No", good_hands == null)
     $q: Question(getShortcut() == "good_hands")
 then
     askQuestion($q);
