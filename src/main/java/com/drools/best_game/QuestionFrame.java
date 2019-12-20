@@ -5,22 +5,19 @@ import org.kie.api.runtime.rule.FactHandle;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class QuestionFrame extends MainGUI {
 
-    private String q;
-    private String answer;
-    private String choosedAnswer;
+    private String chosenAnswer;
 
-    public QuestionFrame(String q, String[] possibleAnswers){
-        this.q = q;
-        this.answer = "";
+    private String capitalizeFirstLetter(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    }
 
+    public QuestionFrame(String q, String[] possibleAnswers, String attribute){
         clear_content();
 
         GroupLayout groupLayout = new GroupLayout(content);
@@ -47,16 +44,28 @@ public class QuestionFrame extends MainGUI {
         JPanel buttonsPanel = new JPanel();
         for (String possAn : possibleAnswers){
             JButton option = new JButton(possAn);
-            option.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent actionEvent) {
-                    choosedAnswer = possAn;
-                    try {
-                        updateAnswer();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+            option.addActionListener(actionEvent -> {
+                chosenAnswer = possAn;
+                for (FactHandle f: getSession().getFactHandles()) {
+                    Object sessionObject = getSession().getObject(f);
+//                    System.out.println(f.toString());
+                    if (sessionObject.getClass().toString().equals("class com.drools.best_game.UserPreferences")) {
+                        for (Method method : sessionObject.getClass().getDeclaredMethods()) {
+//                            System.out.println(Arrays.toString(sessionObject.getClass().getDeclaredMethods()));
+                            if (method.getName().startsWith("set" + capitalizeFirstLetter(attribute))) {
+                                try {
+                                    method.invoke(sessionObject, chosenAnswer);
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                } catch (InvocationTargetException e) {
+                                    e.printStackTrace();
+                                }
+                                FactHandle fh = getSession().getFactHandle(sessionObject);
+                                getSession().update(fh, sessionObject);
+                                getSession().fireAllRules();
+                                break;
+                            }
+                        }
                     }
                 }
             });
@@ -67,39 +76,4 @@ public class QuestionFrame extends MainGUI {
         vertical.addComponent(buttonsPanel);
     }
 
-    public void updateAnswer() throws InvocationTargetException, IllegalAccessException {
-        Object target = null;
-        boolean ok = false;
-        for (FactHandle f: getSession().getFactHandles()){
-            Object sessionObject = getSession().getObject(f);
-            for (Method method: sessionObject.getClass().getDeclaredMethods()){
-                if (method.getName().startsWith("getQ")) {
-                    Object value = method.invoke(sessionObject);
-                    if (value != null) {
-                        if (value.equals(this.q)){
-                            target = sessionObject;
-                            ok = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (ok){break;}
-        }
-        if (target != null){
-            for (Method method: target.getClass().getDeclaredMethods()){
-                if (method.getName().startsWith("setAnswer")) {
-                    method.invoke(target, choosedAnswer);
-                    FactHandle fh = getSession().getFactHandle(target);
-                    getSession().update(fh, target);
-                    getSession().fireAllRules();
-                    break;
-                }
-            }
-        }
-    }
-
-    public String getAnswer() throws InterruptedException{
-        return this.answer;
-    }
 }

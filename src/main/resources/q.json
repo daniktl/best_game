@@ -27,7 +27,7 @@
   },
   {
     "q": "Do you want to spend dozens of hours preparing to play?",
-    "shortcut": "spend hours preparing",
+    "shortcut": "spend_hours_preparing",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -35,7 +35,7 @@
   },
   {
     "q": "Do you really like spending money?",
-    "shortcut": "like spending money",
+    "shortcut": "like_spending_money",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -43,7 +43,7 @@
   },
   {
     "q": "Does the name Boomer give you wet dreams?",
-    "shortcut": "like boomer",
+    "shortcut": "like_boomer",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -51,7 +51,7 @@
   },
   {
     "q": "Do you think everyone should just get along?",
-    "shortcut": "everyone get along",
+    "shortcut": "everyone_get_along",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -59,7 +59,7 @@
   },
   {
     "q": "Do you secretly wish you were a dick? (a P.I.)",
-    "shortcut": "wish you were a dick",
+    "shortcut": "wish_you_were_a_dick",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -67,7 +67,7 @@
   },
   {
     "q": "Do you have a Monty Python Fetish?",
-    "shortcut": "monthy python",
+    "shortcut": "monthy_python",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -83,7 +83,7 @@
   },
   {
     "q": "Would you rather fight monsters or viruses?",
-    "shortcut": "monsters vs viruses",
+    "shortcut": "monsters_vs_viruses",
     "possibleAnswers": [
       "Monster",
       "Virus"
@@ -99,7 +99,7 @@
   },
   {
     "q": "Are you over 50 years old?",
-    "shortcut": "over 50",
+    "shortcut": "over_50",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -107,7 +107,7 @@
   },
   {
     "q": "More than two of you?",
-    "shortcut": "more than 2",
+    "shortcut": "more_than_2",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -139,7 +139,7 @@
   },
   {
     "q": "Looking to get laid?",
-    "shortcut": "get laid",
+    "shortcut": "get_laid",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -155,7 +155,7 @@
   },
   {
     "q": "Do you want to be a thug or an artist?",
-    "shortcut": "thug vs artist",
+    "shortcut": "thug_vs_artist",
     "possibleAnswers": [
       "Thug",
       "Artist"
@@ -171,7 +171,7 @@
   },
   {
     "q": "Words or trivia?",
-    "shortcut": "words vs trivia",
+    "shortcut": "words_vs_trivia",
     "possibleAnswers": [
       "Words",
       "Trivia"
@@ -179,7 +179,7 @@
   },
   {
     "q": "Good with you hands?",
-    "shortcut": "good hands",
+    "shortcut": "good_hands",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -187,7 +187,7 @@
   },
   {
     "q": "Are you a know it all?",
-    "shortcut": "know all",
+    "shortcut": "know_all",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -195,7 +195,7 @@
   },
   {
     "q": "Get straight A's?",
-    "shortcut": "a's",
+    "shortcut": "straight_as",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -227,7 +227,7 @@
   },
   {
     "q": "Words or tiles?",
-    "shortcut": "words vs tiles",
+    "shortcut": "words_vs_tiles",
     "possibleAnswers": [
       "Words",
       "Tiles"
@@ -235,7 +235,7 @@
   },
   {
     "q": "Constant hard choices?",
-    "shortcut": "hard choices",
+    "shortcut": "hard_choices",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -259,7 +259,7 @@
   },
   {
     "q": "Are all players serious board game geeks?",
-    "shortcut": "game geeks",
+    "shortcut": "game_geeks",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -267,7 +267,7 @@
   },
   {
     "q": "Card/deck based game?",
-    "shortcut": "card/deck",
+    "shortcut": "card_deck",
     "possibleAnswers": [
       "Yes",
       "No"
@@ -291,7 +291,7 @@
   },
   {
     "q": "Defined turns or no down-time?",
-    "shortcut": "defined vs nodt",
+    "shortcut": "defined_vs_nodt",
     "possibleAnswers": [
       "Defined",
       "No down-time"
