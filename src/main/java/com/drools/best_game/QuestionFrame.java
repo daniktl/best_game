@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 
 public class QuestionFrame extends MainGUI {
 
@@ -48,16 +47,12 @@ public class QuestionFrame extends MainGUI {
                 chosenAnswer = possAn;
                 for (FactHandle f: getSession().getFactHandles()) {
                     Object sessionObject = getSession().getObject(f);
-//                    System.out.println(f.toString());
                     if (sessionObject.getClass().toString().equals("class com.drools.best_game.UserPreferences")) {
                         for (Method method : sessionObject.getClass().getDeclaredMethods()) {
-//                            System.out.println(Arrays.toString(sessionObject.getClass().getDeclaredMethods()));
                             if (method.getName().startsWith("set" + capitalizeFirstLetter(attribute))) {
                                 try {
                                     method.invoke(sessionObject, chosenAnswer);
-                                } catch (IllegalAccessException e) {
-                                    e.printStackTrace();
-                                } catch (InvocationTargetException e) {
+                                } catch (IllegalAccessException | InvocationTargetException e) {
                                     e.printStackTrace();
                                 }
                                 FactHandle fh = getSession().getFactHandle(sessionObject);

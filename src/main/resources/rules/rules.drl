@@ -1,9 +1,7 @@
 package com.drools.best_game
-//import com.drools.best_game.BestGame.Question
 import com.drools.best_game.MainGUI
 import com.drools.best_game.ResultFrame
 import com.drools.best_game.QuestionFrame
-//import function com.drools.best_game.BestGame.askQuestion
 
 import javax.swing.JFrame
 import javax.swing.JOptionPane
@@ -72,22 +70,6 @@ function void askQuestion(Question q){
     qf.show();
 }
 
-
-//function void askQuestion(Question q){
-//    JFrame frame = MainGUI.getFrame();
-//    int answer_idx = JOptionPane.showOptionDialog(frame,
-//            q.getQ(),
-//            "Answer the question",
-//            JOptionPane.DEFAULT_OPTION,
-//            JOptionPane.QUESTION_MESSAGE,
-//            null,
-//            q.getPossibleAnswers(),
-//            q.getPossibleAnswers()[0]
-//    );
-//    q.setAnswer(q.getPossibleAnswers()[answer_idx]);
-//}
-
-
 rule "init"
 when
 
@@ -114,23 +96,10 @@ then
     update($u)
 end
 
-//rule "less then two hours"
-//no-loop
-//when
-//    // check if already passed main frame
-//    // MainFrame(started == true)
-//    Question(getShortcut() == "2 hours", getAnswer() == "No")
-//    $q : Question(getShortcut() == "nerd", getAnswer() == null)
-//then
-//    askQuestion($q);
-//    update($q);
-//end
-
 rule "nerd"
 no-loop
 when
     $u : UserPreferences(nerd == "Yes", spend_hours_preparing == null)
-//    Question(getShortcut() == "nerd", getAnswer() == "Yes")
     $q: Question(getShortcut() == "spend_hours_preparing")
 then
     askQuestion($q);
@@ -141,7 +110,6 @@ rule "not nerd"
 no-loop
 when
     $u : UserPreferences(nerd == "No", everyone_get_along == null)
-//    Question(getShortcut() == "nerd", getAnswer() == "No")
     $q: Question(getShortcut() == "everyone_get_along")
 then
     askQuestion($q);

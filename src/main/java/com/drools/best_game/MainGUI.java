@@ -51,10 +51,6 @@ public class MainGUI {
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
     }
 
-    public static JFrame getFrame(){
-        return frame;
-    }
-
     public static KieSession getSession() {
         return session;
     }

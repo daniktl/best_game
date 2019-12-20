@@ -1,23 +1,5 @@
 [
   {
-    "q": "Are you playing with children?",
-    "shortcut": "children",
-    "possibleAnswers": [
-      "Yes",
-      "No"
-    ],
-    "answer": "No"
-  },
-  {
-    "q": "Play more than two hours?",
-    "shortcut": "2 hours",
-    "possibleAnswers": [
-      "Yes",
-      "No"
-    ],
-    "answer": "No"
-  },
-  {
     "q": "Are you a huge nerd?",
     "shortcut": "nerd",
     "possibleAnswers": [
@@ -251,7 +233,7 @@
   },
   {
     "q": "Do you mind having to buy two games?",
-    "shortcut": "two games",
+    "shortcut": "two_games",
     "possibleAnswers": [
       "Yes",
       "No"

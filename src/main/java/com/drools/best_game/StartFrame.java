@@ -3,8 +3,6 @@ package com.drools.best_game;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class StartFrame extends MainGUI {
     public StartFrame() {
@@ -46,20 +44,12 @@ public class StartFrame extends MainGUI {
         horizontal.addComponent(btn_panel);
         vertical.addComponent(btn_panel);
 
-        startButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                MainGUI.getSession().fireAllRules();
-//                close();
-            }
-        });
+        startButton.addActionListener(actionEvent -> MainGUI.getSession().fireAllRules());
 
         JPanel copyright_bottom = new JPanel();
         JLabel copyright_l = new JLabel("<html>Created by Daniil Martsich & Marcin Odor<br>Poznań, 2019</html>", SwingConstants.CENTER);
-//        JLabel copyright_l_additional = new JLabel("Poznań, 2019");
 
         copyright_bottom.add(copyright_l);
-//        copyright_bottom.add(copyright_l_additional);
 
         horizontal.addComponent(copyright_bottom);
         vertical.addComponent(copyright_bottom);

@@ -2,8 +2,6 @@ package com.drools.best_game;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ResultFrame extends MainGUI {
     public ResultFrame(String result) {
@@ -47,11 +45,9 @@ public class ResultFrame extends MainGUI {
         horizontal.addComponent(bottom_p);
         vertical.addComponent(bottom_p);
 
-        closeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                if (actionEvent.getActionCommand().equals("close")) {
-                    close();
-                }
+        closeButton.addActionListener(actionEvent -> {
+            if (actionEvent.getActionCommand().equals("close")) {
+                close();
             }
         });
     }
