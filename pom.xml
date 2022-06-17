@@ -23,7 +23,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         </repository>
     </repositories>
     <properties>
-        <runtime.version>6.5.0.Final</runtime.version>
+        <runtime.version>7.60.0.Final</runtime.version>
     </properties>
     <dependencies>
         <dependency>
